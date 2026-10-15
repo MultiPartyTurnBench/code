@@ -19,7 +19,7 @@ This repository contains:
 4. the **real-audio validation slices** (TurnBench dev, AMI);
 5. the **data-generation pipeline** that produced the corpus.
 
-The data are not in this repository: they are on the Hugging Face Hub: https://huggingface.co/datasets/puneetUMD/MultiPartyTurnBench
+The Hugging data link: https://huggingface.co/datasets/puneetUMD/MultiPartyTurnBench
 
 ---
 
