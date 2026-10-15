@@ -1,0 +1,6 @@
+# Full-duplex behavioural study (mptb/fd, scripts/fd).
+# Analysis and table generation only need numpy; running the API agents needs websockets + soundfile.
+# Building the STOP audio packs additionally needs Kokoro TTS: see requirements/generation.txt.
+numpy==1.26.4
+soundfile>=0.12
+websockets==17.0.1

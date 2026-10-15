@@ -1,0 +1,18 @@
+# Locally hosted full-duplex agents (MiniCPM-o-4.5, Realtime-Venus), one CUDA GPU (H100 80GB used).
+# Versions of the environment used for the paper; both checkpoints load with trust_remote_code.
+-r fd.txt
+torch==2.8.0
+torchaudio==2.8.0
+transformers==4.51.0
+accelerate==1.10.1
+huggingface_hub==0.36.2
+minicpmo-utils==1.0.6
+librosa==0.9.0
+sentencepiece==0.2.1
+onnxruntime==1.21.0
+HyperPyYAML==1.2.3
+inflect==7.5.0
+einops==0.8.1
+pillow==10.4.0
+decord==0.6.0
+moviepy==2.1.2

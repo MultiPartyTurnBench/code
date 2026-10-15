@@ -1,0 +1,128 @@
+{
+  "_comment": "Abstract voice_id -> Kokoro-82M voice binding used by Stage 3 (mptb/generation/tts.py). Gender-matched; prefix 'a' = American English (G2P lang_code 'a'), 'b' = British English (lang_code 'b').",
+  "engine": "kokoro",
+  "repo_id": "hexgrad/Kokoro-82M",
+  "sample_rate": 24000,
+  "binding": {
+    "v01": {
+      "kokoro_voice": "af_alloy",
+      "gender": "F",
+      "style": "clipped/efficient"
+    },
+    "v02": {
+      "kokoro_voice": "af_aoede",
+      "gender": "F",
+      "style": "energetic/upbeat"
+    },
+    "v03": {
+      "kokoro_voice": "am_adam",
+      "gender": "M",
+      "style": "calm/measured"
+    },
+    "v04": {
+      "kokoro_voice": "am_echo",
+      "gender": "M",
+      "style": "forceful/assertive"
+    },
+    "v05": {
+      "kokoro_voice": "am_eric",
+      "gender": "M",
+      "style": "warm/friendly"
+    },
+    "v06": {
+      "kokoro_voice": "am_fenrir",
+      "gender": "M",
+      "style": "hesitant/soft-spoken"
+    },
+    "v07": {
+      "kokoro_voice": "am_liam",
+      "gender": "M",
+      "style": "thoughtful/slow"
+    },
+    "v08": {
+      "kokoro_voice": "af_bella",
+      "gender": "F",
+      "style": "measured/rebuttal-style"
+    },
+    "v09": {
+      "kokoro_voice": "af_heart",
+      "gender": "F",
+      "style": "playful/animated"
+    },
+    "v10": {
+      "kokoro_voice": "af_jessica",
+      "gender": "F",
+      "style": "direct/no-nonsense"
+    },
+    "v11": {
+      "kokoro_voice": "af_kore",
+      "gender": "F",
+      "style": "brisk/professional"
+    },
+    "v12": {
+      "kokoro_voice": "am_michael",
+      "gender": "M",
+      "style": "moderator/neutral"
+    },
+    "v13": {
+      "kokoro_voice": "am_onyx",
+      "gender": "M",
+      "style": "upbeat/expressive"
+    },
+    "v14": {
+      "kokoro_voice": "af_nicole",
+      "gender": "F",
+      "style": "dry-humor/deadpan"
+    },
+    "v15": {
+      "kokoro_voice": "am_puck",
+      "gender": "M",
+      "style": "laid-back/casual"
+    },
+    "v16": {
+      "kokoro_voice": "am_santa",
+      "gender": "M",
+      "style": "deadpan/flat"
+    },
+    "v17": {
+      "kokoro_voice": "af_nova",
+      "gender": "F",
+      "style": "skeptical/probing"
+    },
+    "v18": {
+      "kokoro_voice": "bm_daniel",
+      "gender": "M",
+      "style": "nervous/tentative"
+    },
+    "v19": {
+      "kokoro_voice": "af_river",
+      "gender": "F",
+      "style": "gentle/reassuring"
+    },
+    "v20": {
+      "kokoro_voice": "af_sarah",
+      "gender": "F",
+      "style": "authoritative/instructor"
+    },
+    "v21": {
+      "kokoro_voice": "bm_fable",
+      "gender": "M",
+      "style": "gravelly/mature"
+    },
+    "v22": {
+      "kokoro_voice": "af_sky",
+      "gender": "F",
+      "style": "bright/youthful"
+    },
+    "v23": {
+      "kokoro_voice": "bm_george",
+      "gender": "M",
+      "style": "analytical/precise"
+    },
+    "v24": {
+      "kokoro_voice": "bf_alice",
+      "gender": "F",
+      "style": "empathetic/attentive"
+    }
+  }
+}

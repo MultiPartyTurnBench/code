@@ -1,0 +1,17 @@
+# WavLM-Large ANCHOR (system "wavlm_anchor"); Python 3.10.
+# Follow TurnBench's baselines/wavlm_large_anchor/README: clone the ESPnet Universa branch
+#   git clone --depth 1 -b uni_versa.sh https://github.com/ftshijt/espnet.git espnet-universa
+# overlay the model author's modules from the Hugging Face repo, and put espnet-universa first on PYTHONPATH.
+git+https://github.com/espnet/s3prl.git@6553a49
+numpy==2.2.6
+scipy==1.15.3
+soundfile==0.14.0
+torch==2.5.1
+torchaudio==2.5.1
+transformers==4.49.0
+librosa==0.11.0
+omegaconf==2.3.1
+sentencepiece==0.2.0
+lightning==2.6.6
+webrtcvad-wheels==2.0.14.post1
+huggingface-hub

@@ -1,0 +1,19 @@
+# Offline baselines run in the main environment (Python 3.10): energy, webrtc, silero, smart_turn,
+# smart_turn_int, kyutai, kyutai_int, vap, mimi_ep, dualturn, turn1mini.
+# Versions are those used for the paper. External code (see README): VAP_REPO (vap), TURNBENCH_REPO (mimi_ep).
+numpy==1.26.4
+scipy==1.15.3
+soundfile==0.14.0
+torch==2.7.0
+torchaudio==2.7.0
+transformers==4.53.3
+huggingface-hub==0.33.5
+safetensors==0.5.3
+sentencepiece==0.2.0
+einops==0.8.2
+PyYAML==6.0.3
+webrtcvad-wheels==2.0.14.post1
+silero-vad==6.2.3
+julius==0.2.7
+moshi==0.2.11          # Kyutai; the paper's EOT row was computed with moshi 0.2.13
+p99turn==1.2.3         # turn-1-mini

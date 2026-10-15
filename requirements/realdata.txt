@@ -1,0 +1,6 @@
+# Real-audio validation slices (mptb/realdata, scripts/realdata).
+# Extras on top of the offline-baseline environment (mptb.systems: torch/torchaudio, transformers, VAP code,
+# moshi for Kyutai). pyarrow reads the TurnBench dev parquet; huggingface_hub downloads the gated dataset.
+pyarrow>=14
+soundfile>=0.12
+huggingface_hub>=0.20

@@ -1,0 +1,13 @@
+# MuVAP (system "muvap"); Python 3.10. Model code: MUVAP_REPO = checkout of https://github.com/Haotian-Qi/MuVAP @ 0fe3c66.
+numpy==2.2.6
+scipy==1.15.3
+soundfile==0.14.0
+torch==2.8.0
+torchaudio==2.8.0
+transformers==5.19.0
+lightning==2.6.6
+einops==0.8.2
+PyYAML==6.0.3
+safetensors==0.8.0
+webrtcvad-wheels==2.0.14.post1
+huggingface-hub

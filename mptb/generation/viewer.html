@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MultiPartyTurnBench v1 — dataset viewer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{--turn:#4a7fc1;--int:#d95f02;--bc:#2f8a4a;--lau:#8e4fa0;--fail:#9a9a9a;--yield:#1b7837;--intr:#b2182b;--hold:#b2182b;
+      --bg:#f4f5f7;--card:#fff;--ink:#222;--mute:#666;--line:#e3e5e8}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:14px}
+header{background:#2f3a48;color:#fff;padding:10px 18px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+header h1{font-size:17px;margin:0;font-weight:600}
+header .sub{opacity:.8;font-size:12.5px}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;align-items:center}
+.sw{display:inline-block;width:14px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.wrap{display:flex;height:calc(100vh - 54px)}
+#side{width:330px;min-width:330px;border-right:1px solid var(--line);background:#fafbfc;display:flex;flex-direction:column}
+#filters{padding:10px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:6px}
+#filters select,#filters input{width:100%;padding:4px 6px;font-size:13px;border:1px solid #ccd;border-radius:4px;background:#fff}
+#filters input{grid-column:1/3}
+#count{grid-column:1/3;color:var(--mute);font-size:12px}
+#list{overflow-y:auto;flex:1}
+.item{padding:7px 10px;border-bottom:1px solid var(--line);cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:2px}
+.item:hover{background:#eef3fb}.item.sel{background:#dde9f8}
+.item .id{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:600;font-size:12.5px}
+.item .m{color:var(--mute);font-size:11.5px;grid-column:1/3}
+.tag{font-size:11px;padding:1px 6px;border-radius:8px;color:#fff;white-space:nowrap}
+#main{flex:1;overflow-y:auto;padding:14px 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:12px}
+h2{margin:0 0 6px;font-size:16px}
+.meta{color:var(--mute);font-size:12.5px;line-height:1.55}
+.counts span{display:inline-block;margin-right:12px}
+audio{width:100%;max-width:640px;height:34px}
+.players{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px;margin-top:6px}
+.players div{font-size:12px;color:var(--mute)}
+#tlbox{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:#fff;position:relative}
+svg text{font-family:-apple-system,"Segoe UI",Roboto,sans-serif}
+.ctrl{display:flex;gap:10px;align-items:center;margin:6px 0;font-size:12.5px;color:var(--mute);flex-wrap:wrap}
+table{border-collapse:collapse;width:100%;font-size:13px}
+td{padding:3px 6px;border-bottom:1px solid #f0f1f3;vertical-align:top}
+tr.u{cursor:pointer}tr.u:hover{background:#f3f7fd}tr.u.act{background:#fff6d5}
+td.t{white-space:nowrap;color:var(--mute);font-family:ui-monospace,Menlo,monospace;font-size:11.5px}
+td.s{font-weight:700;white-space:nowrap}
+td.l span{font-size:11px;padding:1px 6px;border-radius:8px;color:#fff;white-space:nowrap}
+td.n{color:var(--mute);font-size:12px;white-space:nowrap}
+.note{font-size:12px;color:var(--mute)}
+kbd{border:1px solid #bbb;border-bottom-width:2px;border-radius:3px;padding:0 4px;font-size:11px;background:#fff}
+</style>
+</head>
+<body>
+<header>
+  <h1>MultiPartyTurnBench v1</h1>
+  <span class="sub">240 conversations · N = 2–5 speakers · 6 interaction types · ground-truth annotations only</span>
+  <div class="legend">
+    <span><span class="sw" style="background:var(--turn)"></span>floor-holding turn</span>
+    <span><span class="sw" style="background:var(--int)"></span>interruption (takeover)</span>
+    <span><span class="sw" style="background:var(--bc)"></span>backchannel</span>
+    <span><span class="sw" style="background:var(--lau)"></span>laughter / non-content</span>
+    <span><span class="sw" style="background:var(--fail)"></span>failed claim (excluded)</span>
+    <span style="color:#9fe0a8">▼ yield (EOT+)</span>
+    <span style="color:#ff9a9a">▼ interruption onset (INT+)</span>
+    <span><span class="sw" style="background:repeating-linear-gradient(45deg,#e8a0a0 0 2px,#fff 2px 4px)"></span>hold pause (EOT−)</span>
+  </div>
+</header>
+<div class="wrap">
+  <div id="side">
+    <div id="filters">
+      <select id="fSplit"><option value="">all splits</option><option>dev</option><option>test</option></select>
+      <select id="fN"><option value="">all N</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+      <select id="fType" style="grid-column:1/3"><option value="">all interaction types</option>
+        <option value="casual">casual</option><option value="task_oriented">task-oriented</option>
+        <option value="instructional">instructional</option><option value="collaborative">collaborative</option>
+        <option value="argumentative">argumentative</option><option value="narrative">narrative</option></select>
+      <input id="fQ" placeholder="search id, domain or transcript text…">
+      <div id="count"></div>
+    </div>
+    <div id="list"></div>
+  </div>
+  <div id="main"><div class="card">Select a conversation on the left.</div></div>
+</div>
+<script src="data.js"></script>
+<script>
+const C = window.MPTB, byId = Object.fromEntries(C.map(c => [c.id, c]));
+const COL = {turn:'#4a7fc1', interruption:'#d95f02', backchannel:'#2f8a4a', laughter:'#8e4fa0', failed_claim:'#9a9a9a'};
+const LAB = {turn:'turn', interruption:'interruption', backchannel:'backchannel', laughter:'laughter', failed_claim:'failed claim'};
+const TCOL = {casual:'#2166ac', task_oriented:'#46505f', instructional:'#762a83', collaborative:'#1b7837', argumentative:'#d95f02', narrative:'#01665e'};
+const FLOOR = ['#c9d9ee','#f6d4b8','#c8e3cf','#e0cde6','#bfe0dc'];
+const $ = s => document.querySelector(s);
+let cur = null, pxs = 14, audio = null, raf = null;
+
+function fmtT(t){ return t.toFixed(1); }
+function counts(c){
+  const a = c.anchors;
+  return {eotp:a.eot_pos.length, eotn:a.eot_neg.length, intp:a.int_pos.length, intn:a.int_neg.length, excl:a.int_excl.length};
+}
+function renderList(){
+  const sp=$('#fSplit').value, n=$('#fN').value, ty=$('#fType').value, q=$('#fQ').value.trim().toLowerCase();
+  const rows = C.filter(c => (!sp||c.split===sp)&&(!n||c.N==n)&&(!ty||c.type===ty)&&
+     (!q || c.id.includes(q) || c.domain.toLowerCase().includes(q) || c.utts.some(u=>u[4].toLowerCase().includes(q))));
+  $('#count').textContent = `${rows.length} of ${C.length} conversations`;
+  $('#list').innerHTML = rows.map(c => { const k=counts(c);
+    return `<div class="item${cur&&cur.id===c.id?' sel':''}" data-id="${c.id}">
+      <span class="id">${c.id}</span><span class="tag" style="background:${TCOL[c.type]}">${c.type.replace('_','-')}</span>
+      <span class="m">N=${c.N} · ${c.dur.toFixed(0)} s · ${c.domain}<br>EOT ${k.eotp}+/${k.eotn}− · INT ${k.intp}+/${k.intn}−</span></div>`; }).join('');
+  document.querySelectorAll('.item').forEach(e => e.onclick = () => { location.hash = e.dataset.id; });
+}
+['#fSplit','#fN','#fType'].forEach(s => $(s).onchange = renderList);
+$('#fQ').oninput = renderList;
+
+function svgTimeline(c){
+  const L=46, lane=26, floorH=14, top=18, W=Math.ceil(c.dur*pxs)+L+20, H=top+c.N*lane+floorH+26;
+  const X = t => L + t*pxs, Y = k => top + k*lane;
+  let s = `<svg id="tl" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
+    <defs><pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="5" height="5" fill="#fff"/><line x1="0" y1="0" x2="0" y2="5" stroke="#e08b8b" stroke-width="2"/></pattern></defs>`;
+  for (let k=0;k<c.N;k++){
+    s += `<rect x="${L}" y="${Y(k)}" width="${W-L-20}" height="${lane}" fill="${k%2?'#fff':'#f7f8fa'}"/>`;
+    s += `<text x="${L-8}" y="${Y(k)+lane/2+4}" text-anchor="end" font-size="11" fill="#555">S${k+1}</text>`;
+  }
+  const fy = top+c.N*lane;
+  s += `<text x="${L-8}" y="${fy+floorH/2+4}" text-anchor="end" font-size="10" fill="#777">floor</text>`;
+  for (const [k,a,b] of c.anchors.eot_neg) s += `<rect x="${X(a)}" y="${Y(k)+2}" width="${Math.max(1,(b-a)*pxs)}" height="${lane-4}" fill="url(#hatch)" stroke="#d07070" stroke-width=".6"><title>hold pause (EOT hard negative) ${fmtT(a)}–${fmtT(b)} s</title></rect>`;
+  c.utts.forEach((u,i) => { const [k,a,b,cl,tx,note]=u;
+    s += `<rect class="clip" data-i="${i}" x="${X(a)}" y="${Y(k)+5}" width="${Math.max(1.5,(b-a)*pxs)}" height="${lane-10}" rx="3" fill="${COL[cl]}" opacity=".9"><title>S${k+1} [${LAB[cl]}] ${fmtT(a)}–${fmtT(b)} s\n${tx.replace(/</g,'&lt;')}${note?'\n→ '+note:''}</title></rect>`; });
+  for (const [k,a,b] of c.floor) s += `<rect x="${X(a)}" y="${fy+2}" width="${Math.max(1,(b-a)*pxs)}" height="${floorH-4}" fill="${FLOOR[k]}"/>` +
+      ((b-a)*pxs>22?`<text x="${X((a+b)/2)}" y="${fy+floorH/2+3.5}" font-size="9" text-anchor="middle" fill="#444">S${k+1}</text>`:'');
+  for (const [k,t] of c.anchors.eot_pos) s += `<line x1="${X(t)}" x2="${X(t)}" y1="${top}" y2="${fy+floorH}" stroke="#1b7837" stroke-opacity=".35" stroke-dasharray="3 2"/><path d="M${X(t)-4},${Y(k)} h8 l-4,6z" fill="#1b7837"><title>yield / end of turn (EOT positive) S${k+1} @ ${fmtT(t)} s</title></path>`;
+  for (const [k,t] of c.anchors.int_pos) s += `<line x1="${X(t)}" x2="${X(t)}" y1="${top}" y2="${fy+floorH}" stroke="#b2182b" stroke-opacity=".55" stroke-dasharray="4 2"/><path d="M${X(t)-5},${Y(k)} h10 l-5,8z" fill="#b2182b"><title>interruption onset (INT positive) S${k+1} @ ${fmtT(t)} s</title></path>`;
+  const ay = fy+floorH+2;
+  s += `<line x1="${L}" x2="${X(c.dur)}" y1="${ay}" y2="${ay}" stroke="#999"/>`;
+  for (let t=0;t<=c.dur;t+=5) s += `<line x1="${X(t)}" x2="${X(t)}" y1="${ay}" y2="${ay+(t%10?3:5)}" stroke="#999"/>` + (t%10?'':`<text x="${X(t)}" y="${ay+15}" font-size="10" text-anchor="middle" fill="#777">${t}</text>`);
+  s += `<line id="ph" x1="${L}" x2="${L}" y1="${top-6}" y2="${ay}" stroke="#111" stroke-width="1.5"/>`;
+  return s + '</svg>';
+}
+
+function show(id){
+  const c = byId[id]; if (!c) return; cur = c;
+  if (audio) audio.pause(); cancelAnimationFrame(raf);
+  const k = counts(c);
+  const voices = c.voices.map(v => `${v[0]} = ${v[1]} (${v[2]}, ${v[3]})`).join(' · ');
+  const players = c.speakers.map((s,i) => `<div>S${i+1} channel (noisy, model input)<br><audio controls preload="none" src="../${c.split}/audio/noisy/${c.id}_${s}.flac"></audio></div>`).join('') +
+    c.speakers.map((s,i) => `<div>S${i+1} channel (clean)<br><audio controls preload="none" src="../${c.split}/audio/clean/${c.id}_${s}.flac"></audio></div>`).join('');
+  $('#main').innerHTML = `
+  <div class="card" style="border-top:4px solid ${TCOL[c.type]}">
+    <h2>${c.id} · N=${c.N} · ${c.type.replace('_','-')} · ${c.domain}</h2>
+    <div class="meta">${c.split} split · ${c.dur.toFixed(1)} s · tone: ${c.tone} · noise: ${c.noise}<br>voices: ${voices}</div>
+    <div class="meta counts"><span><b>EOT</b> ${k.eotp} yields / ${k.eotn} hold pauses</span><span><b>INT</b> ${k.intp} interruptions / ${k.intn} backchannel+laughter negatives</span><span>${k.excl} failed claims (excluded)</span></div>
+  </div>
+  <div class="card">
+    <div class="ctrl"><b style="color:#222">Noisy mix (all channels, preview MP3)</b>
+      <span>click the timeline or a transcript line to seek · <kbd>space</kbd> play/pause</span></div>
+    <audio id="mix" controls preload="auto" src="mix/${c.id}.mp3"></audio>
+    <div class="ctrl">zoom <input id="zoom" type="range" min="5" max="40" value="${pxs}"> <span id="zv">${pxs} px/s</span>
+      <label><input type="checkbox" id="follow" checked> follow playhead</label></div>
+    <div id="tlbox">${svgTimeline(c)}</div>
+    <details style="margin-top:8px"><summary class="note">individual speaker channels (lossless FLAC)</summary><div class="players">${players}</div></details>
+  </div>
+  <div class="card"><h2 style="font-size:14px">Transcript (${c.utts.length} utterances, time order)</h2>
+    <table id="tr">${c.utts.map((u,i)=>`<tr class="u" data-i="${i}" data-t="${u[1]}"><td class="t">${fmtT(u[1])}–${fmtT(u[2])}</td>
+      <td class="s" style="color:${COL[u[3]]}">S${u[0]+1}</td><td class="l"><span style="background:${COL[u[3]]}">${LAB[u[3]]}</span></td>
+      <td>${u[4].replace(/</g,'&lt;')}</td><td class="n">${u[5]?'→ '+u[5]:''}</td></tr>`).join('')}</table></div>`;
+  audio = $('#mix');
+  const svg = $('#tl'), box = $('#tlbox'), L = 46;
+  const seek = t => { audio.currentTime = Math.max(0, t); audio.play(); };
+  svg.onclick = e => { const r = svg.getBoundingClientRect(); seek((e.clientX - r.left - L)/pxs); };
+  document.querySelectorAll('tr.u').forEach(r => r.onclick = () => seek(parseFloat(r.dataset.t) - 0.3));
+  $('#zoom').oninput = e => { pxs = +e.target.value; const t = audio.currentTime, playing = !audio.paused; show(c.id); $('#mix').currentTime = t; if (playing) $('#mix').play(); };
+  const rows = [...document.querySelectorAll('tr.u')];
+  const tick = () => {
+    const t = audio.currentTime, x = L + t*pxs, ph = $('#ph');
+    if (ph) { ph.setAttribute('x1', x); ph.setAttribute('x2', x); }
+    if ($('#follow') && $('#follow').checked && !audio.paused && (x < box.scrollLeft + 40 || x > box.scrollLeft + box.clientWidth - 80)) box.scrollLeft = x - 120;
+    rows.forEach((r,i) => { const u = c.utts[i]; r.classList.toggle('act', t >= u[1] && t <= u[2]); });
+    raf = requestAnimationFrame(tick);
+  };
+  raf = requestAnimationFrame(tick);
+  renderList();
+  const sel = document.querySelector('.item.sel'); if (sel) sel.scrollIntoView({block:'nearest'});
+}
+document.addEventListener('keydown', e => { if (e.code==='Space' && audio && e.target.tagName!=='INPUT') { e.preventDefault(); audio.paused ? audio.play() : audio.pause(); } });
+window.onhashchange = () => show(location.hash.slice(1));
+renderList();
+show(location.hash.slice(1) || C[0].id);
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# ESPnet turn-taking (systems "espnet_tt_mix", "espnet_tt_perchannel"); Python 3.10.
+# ESPnet from source at commit 750e3749 (pip install -e <espnet checkout>) and the espnet whisper fork
+# (the PyPI openai-whisper release is incompatible), as in TurnBench's baselines/espnet_turntaking.
+git+https://github.com/espnet/whisper.git
+numpy==2.2.6
+scipy==1.15.3
+soundfile==0.14.0
+torch==2.7.0
+torchaudio==2.7.0
+librosa==0.11.0
+omegaconf==2.3.1
+sentencepiece==0.2.1
+lightning==2.6.6
+webrtcvad-wheels==2.0.14.post1
+huggingface-hub

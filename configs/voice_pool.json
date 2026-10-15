@@ -1,0 +1,29 @@
+{
+  "_comment": "Abstract voice pool of MultiPartyTurnBench: 24 voice ids (12 F, 12 M) with gender and a free-text speaking-style descriptor that is passed to the Stage-1 script generator. Engine-specific voices are bound in voice_binding_kokoro.json, keeping Stages 1-2 engine-agnostic.",
+  "voices": [
+    {"voice_id": "v01", "gender": "F", "style": "clipped/efficient"},
+    {"voice_id": "v02", "gender": "F", "style": "energetic/upbeat"},
+    {"voice_id": "v03", "gender": "M", "style": "calm/measured"},
+    {"voice_id": "v04", "gender": "M", "style": "forceful/assertive"},
+    {"voice_id": "v05", "gender": "M", "style": "warm/friendly"},
+    {"voice_id": "v06", "gender": "M", "style": "hesitant/soft-spoken"},
+    {"voice_id": "v07", "gender": "M", "style": "thoughtful/slow"},
+    {"voice_id": "v08", "gender": "F", "style": "measured/rebuttal-style"},
+    {"voice_id": "v09", "gender": "F", "style": "playful/animated"},
+    {"voice_id": "v10", "gender": "F", "style": "direct/no-nonsense"},
+    {"voice_id": "v11", "gender": "F", "style": "brisk/professional"},
+    {"voice_id": "v12", "gender": "M", "style": "moderator/neutral"},
+    {"voice_id": "v13", "gender": "M", "style": "upbeat/expressive"},
+    {"voice_id": "v14", "gender": "F", "style": "dry-humor/deadpan"},
+    {"voice_id": "v15", "gender": "M", "style": "laid-back/casual"},
+    {"voice_id": "v16", "gender": "M", "style": "deadpan/flat"},
+    {"voice_id": "v17", "gender": "F", "style": "skeptical/probing"},
+    {"voice_id": "v18", "gender": "M", "style": "nervous/tentative"},
+    {"voice_id": "v19", "gender": "F", "style": "gentle/reassuring"},
+    {"voice_id": "v20", "gender": "F", "style": "authoritative/instructor"},
+    {"voice_id": "v21", "gender": "M", "style": "gravelly/mature"},
+    {"voice_id": "v22", "gender": "F", "style": "bright/youthful"},
+    {"voice_id": "v23", "gender": "M", "style": "analytical/precise"},
+    {"voice_id": "v24", "gender": "F", "style": "empathetic/attentive"}
+  ]
+}
