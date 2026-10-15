@@ -1,6 +1,6 @@
 # MultiPartyTurnBench
 
-Code for **MultiPartyTurnBench (MPTB): Benchmarking Turn-taking Dynamics in Multi-Party Spoken Dialogues**.
+Code for **MultiPartyTurnBench (MPTB): Benchmarking Floor Control in Multi-Party Spoken Dialogues**.
 
 MPTB evaluates *multi-party floor control* on 240 synthetic, channel-separated conversations with 2–5
 speakers and six interaction types, each with an exact, role-relative event log. Two causal tasks are scored
@@ -19,8 +19,7 @@ This repository contains:
 4. the **real-audio validation slices** (TurnBench dev, AMI);
 5. the **data-generation pipeline** that produced the corpus.
 
-The data are not in this repository: they are on the Hugging Face Hub as the dataset
-**`MultiPartyTurnBench`**.
+The data are not in this repository: they are on the Hugging Face Hub: https://huggingface.co/datasets/puneetUMD/MultiPartyTurnBench
 
 ---
 
